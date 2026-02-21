@@ -6,6 +6,7 @@ plugins {
     id("org.beryx.jlink") version "2.25.0"
 }
 
+// Updated group to match our directory structure
 group = "com.hotel_lagbe"
 version = "1.0-SNAPSHOT"
 
@@ -26,8 +27,12 @@ tasks.withType<JavaCompile> {
 }
 
 application {
-    mainModule.set("com.hotel_lagbe.app")
-    mainClass.set("com.hotel_lagbe.app.HelloApplication")
+    // ---------------------------------------------------------
+    // THIS FIXES THE CRASH.
+    // It now points to your new module and ClientMain class.
+    // ---------------------------------------------------------
+    mainModule.set("com.hotel_lagbe")
+    mainClass.set("com.hotel_lagbe.client.ClientMain")
 }
 
 javafx {
@@ -48,6 +53,6 @@ jlink {
     imageZip.set(layout.buildDirectory.file("/distributions/app-${javafx.platform.classifier}.zip"))
     options.set(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
     launcher {
-        name = "app"
+        name = "HotelLagbe"
     }
 }

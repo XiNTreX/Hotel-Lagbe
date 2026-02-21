@@ -2,10 +2,13 @@ module com.hotellagbe {
     requires javafx.controls;
     requires javafx.fxml;
 
+    // Allow JavaFX to access your new controller package
     opens com.hotel_lagbe.client.controllers to javafx.fxml;
 
-    // Export your main packages
+    // Export your new main client package so the JVM can run it
     exports com.hotel_lagbe.client;
-    //exports com.hotel_lagbe.server;
-    //exports com.hotel_lagbe.shared.models;
+
+    // We will uncomment these later when we build the server and shared models
+    // exports com.hotellagbe.server;
+    // exports com.hotellagbe.shared.models;
 }
