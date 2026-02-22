@@ -20,63 +20,60 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class SignUpController {
 
-    // Linking directly to the fx:id names in your LoginView.fxml
+    @FXML private TextField fullNameField;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label messageLabel;
 
-    // --- Action: Clicking "Sign in" ---
     @FXML
-    public void handleLogin(ActionEvent event) {
+    public void handleSignUp(ActionEvent event) {
+        String fullName = fullNameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showMessage("Please enter both username and password.", false);
+        if (fullName.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            showMessage("Please fill in all fields.", false);
             return;
         }
 
-        // 1. Package the login attempt
-        User loginUser = new User(username, password);
-        Request loginRequest = new Request(MessageType.LOGIN, loginUser);
+        // 1. Create the new User object with all THREE pieces of data
+        User newUser = new User(fullName, username, password);
+        Request signUpRequest = new Request(MessageType.SIGN_UP, newUser);
 
-        // 2. Send through our network tunnel
+        // 2. Send through the tunnel
         ServerConnection connection = ServerConnection.getInstance();
-        Response serverReply = connection.sendRequest(loginRequest);
+        Response serverReply = connection.sendRequest(signUpRequest);
 
-        // 3. React to the Server's response
+        // 3. Check what the server said
         if (serverReply.isSuccess()) {
-            showMessage("Login Successful!", true);
-            // We will add the code here to switch to the Dashboard later!
+            showMessage("Account created! You can now go back and log in.", true);
+            // Optionally clear the fields so it looks nice
+            fullNameField.clear();
+            usernameField.clear();
+            passwordField.clear();
         } else {
             showMessage(serverReply.getMessage(), false);
         }
     }
 
-    // --- Action: Clicking "Sign Up" ---
     @FXML
-    public void switchToSignUp(ActionEvent event) {
+    public void switchToLogin(ActionEvent event) {
         try {
-            // 1. Find the new FXML page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/SignUpView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/LoginView.fxml"));
             Parent root = loader.load();
 
-            // 2. Get the current window (Stage) from the button that was clicked
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // 3. Swap the scene to the new page
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showMessage("Error loading Sign Up page.", false);
+            showMessage("Error loading Login page.", false);
         }
     }
 
-    // Helper method to change the label text and color easily
     private void showMessage(String message, boolean isSuccess) {
         messageLabel.setText(message);
         if (isSuccess) {

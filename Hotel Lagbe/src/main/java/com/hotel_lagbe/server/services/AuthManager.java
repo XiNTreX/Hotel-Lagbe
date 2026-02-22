@@ -8,31 +8,35 @@ public class AuthManager {
 
     private DataStore dataStore;
 
+    // The AuthManager needs the DataStore to do its job
     public AuthManager(DataStore dataStore) {
         this.dataStore = dataStore;
     }
 
+    // --- Handling Login Logic ---
     public Response handleLogin(User loginAttempt) {
         User existingUser = dataStore.getUser(loginAttempt.getUsername());
 
         if (existingUser == null) {
-            return new Response(false, "Error: User does not exist. Please sign up.");
+            return new Response(false, "Username not found. Please sign up.");
         }
 
+        // Compare the password sent by the client with the one in our database
         if (existingUser.getPassword().equals(loginAttempt.getPassword())) {
-            return new Response(true, "Login successful! Welcome back, " + existingUser.getUsername(), existingUser);
+            return new Response(true, "Welcome back, " + existingUser.getFullName() + "!");
         } else {
-            return new Response(false, "Error: Incorrect password.");
+            return new Response(false, "Incorrect password.");
         }
     }
 
+    // --- Handling Sign-Up Logic ---
     public Response handleSignUp(User newUser) {
-        boolean isRegistered = dataStore.addUser(newUser);
+        boolean isSaved = dataStore.addUser(newUser);
 
-        if (isRegistered) {
-            return new Response(true, "Account created successfully! You can now log in.");
+        if (isSaved) {
+            return new Response(true, "Account created! You can now log in.");
         } else {
-            return new Response(false, "Error: Username is already taken. Please choose another.");
+            return new Response(false, "That username is already taken.");
         }
     }
 }

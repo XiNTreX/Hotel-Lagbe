@@ -1,77 +1,37 @@
 package com.hotel_lagbe.server.database;
 
-import com.hotel_lagbe.shared.models.Booking;
-import com.hotel_lagbe.shared.models.Hotel;
-import com.hotel_lagbe.shared.models.StandardRoom;
 import com.hotel_lagbe.shared.models.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DataStore {
 
-    // We use a Map for users so we can instantly look them up by their username
+    // The Map storing all our registered users. Key = username, Value = User object
     private Map<String, User> users;
-
-    // Our platform now holds a List of Hotels, instead of just loose rooms!
-    private List<Hotel> hotels;
-    private List<Booking> bookings;
 
     public DataStore() {
         this.users = new HashMap<>();
-        this.hotels = new ArrayList<>();
-        this.bookings = new ArrayList<>();
 
-        initializeDummyData();
+        // Let's add a dummy admin account so you can test logging in immediately
+        users.put("admin", new User("Admin User", "admin", "admin123"));
     }
 
-    private void initializeDummyData() {
-        // 1. Default Users
-        users.put("admin", new User("admin", "admin123", "ADMIN"));
-        users.put("rupom_hazra121", new User("rupom_hazra121", "password123", "GUEST"));
-
-        // 2. Create Hotels for the platform
-        Hotel resort = new Hotel("H01", "Grand Sultan Tea Resort", "Sreemangal");
-        Hotel cityHotel = new Hotel("H02", "InterContinental", "Dhaka");
-
-        // 3. Add Rooms to those specific Hotels
-        resort.addRoom(new StandardRoom("101", 5000.0, 1));
-        resort.addRoom(new StandardRoom("102", 7500.0, 2));
-
-        cityHotel.addRoom(new StandardRoom("301", 8000.0, 1));
-        cityHotel.addRoom(new StandardRoom("302", 12000.0, 2));
-
-        // 4. Add the Hotels to our platform's master list
-        hotels.add(resort);
-        hotels.add(cityHotel);
-    }
-
-    // --- Methods for the Server to interact with the data ---
-
-    // Used for LOGIN
+    // Retrieves a user by their username. Returns null if they don't exist.
     public User getUser(String username) {
         return users.get(username);
     }
 
-    // Used for SIGN_UP (Thread-safe to prevent two people taking the same username at the exact same time)
+    // Adds a new user. The 'synchronized' keyword ensures that if two people
+    // try to sign up at the exact same millisecond, the server won't crash.
     public synchronized boolean addUser(User newUser) {
+        // Check if the username is already taken
         if (users.containsKey(newUser.getUsername())) {
-            return false; // Registration fails: Username already exists!
+            return false;
         }
+
+        // Save the new user to our Map
         users.put(newUser.getUsername(), newUser);
-        return true; // Registration successful
-    }
-
-    // Used for SEARCH_ROOMS
-    public List<Hotel> getAllHotels() {
-        return hotels;
-    }
-
-    // Used for BOOK_ROOM
-    public synchronized void addBooking(Booking booking) {
-        bookings.add(booking);
-        booking.getBookedRoom().setBooked(true);
+        return true;
     }
 }
