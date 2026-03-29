@@ -1,7 +1,8 @@
 module com.hotellagbe {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires com.fasterxml.jackson.databind;
+    requires java.net.http;
     // Allow JavaFX to access your new controller package
     opens com.hotel_lagbe.client.controllers to javafx.fxml;
 

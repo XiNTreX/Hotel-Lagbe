@@ -49,7 +49,18 @@ public class LoginController {
         // 3. React to the Server's response
         if (serverReply.isSuccess()) {
             showMessage("Login Successful!", true);
-            // We will add the code here to switch to the Dashboard later!
+            // Switch to location input view
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/LocationInputView.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showMessage("Error loading Location Input page.", false);
+            }
         } else {
             showMessage(serverReply.getMessage(), false);
         }
