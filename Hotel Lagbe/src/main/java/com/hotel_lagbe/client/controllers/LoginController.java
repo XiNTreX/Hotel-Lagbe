@@ -22,6 +22,9 @@ import java.io.IOException;
 
 public class LoginController {
 
+    // Track the logged-in user so we can assign bookings to them later
+    public static User loggedInUser;
+
     // Linking directly to the fx:id names in your LoginView.fxml
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
@@ -48,6 +51,9 @@ public class LoginController {
 
         // 3. React to the Server's response
         if (serverReply.isSuccess()) {
+            // Save the user session globally!
+            loggedInUser = loginUser;
+
             showMessage("Login Successful!", true);
             // Switch to location input view
             try {

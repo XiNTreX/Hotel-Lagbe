@@ -29,7 +29,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
+import javafx.util.StringConverter;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 public class SearchController {
 
     @FXML private TextField locationField;
@@ -51,6 +53,8 @@ public class SearchController {
 
     @FXML
     public void initialize() {
+        formatDatePicker(checkin);
+        formatDatePicker(checkout);
         // Load locations for suggestion
         loadLocationSuggestions();
 
@@ -236,5 +240,37 @@ public class SearchController {
             statusLabel.setText(message);
             statusLabel.setVisible(true);
         }
+    }
+    @FXML
+    private void goToMyBookings(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/MyBookingsView.fxml"));
+            javafx.scene.Parent root = loader.load();
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new javafx.scene.Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void formatDatePicker(DatePicker datePicker) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                return (date != null) ? formatter.format(date) : "";
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    try {
+                        return LocalDate.parse(string, formatter);
+                    } catch (DateTimeParseException e) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        });
     }
 }

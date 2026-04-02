@@ -24,6 +24,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import javafx.util.StringConverter;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class LocationInputController {
 
@@ -64,6 +67,8 @@ public class LocationInputController {
     @FXML
     public void initialize() {
         // Fetch locations from API asynchronously
+        formatDatePicker(checkin);
+        formatDatePicker(checkout);
         CompletableFuture.supplyAsync(this::fetchLocationsFromAPI)
             .thenAccept(locations -> Platform.runLater(() -> {
                 allLocations = FXCollections.observableArrayList(locations);
@@ -260,4 +265,25 @@ private void handleSearch() {
         errorLabel.setText("Error loading search results page.");
     }
 }
+    private void formatDatePicker(DatePicker datePicker) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                return (date != null) ? formatter.format(date) : "";
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    try {
+                        return LocalDate.parse(string, formatter);
+                    } catch (DateTimeParseException e) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+        });
+    }
 }

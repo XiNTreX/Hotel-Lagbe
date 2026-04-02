@@ -2,6 +2,8 @@ package com.hotel_lagbe.server;
 
 import com.hotel_lagbe.server.database.DataStore;
 import com.hotel_lagbe.server.services.AuthManager;
+import com.hotel_lagbe.server.services.BookingManager;
+import com.hotel_lagbe.shared.models.Booking;
 import com.hotel_lagbe.shared.models.User;
 import com.hotel_lagbe.shared.network.Request;
 import com.hotel_lagbe.shared.network.Response;
@@ -18,12 +20,14 @@ public class ClientHandler implements Runnable {
 
     // The worker needs its tools
     private AuthManager authManager;
+    private BookingManager bookingManager;
 
     // We updated the constructor to accept the DataStore
     public ClientHandler(Socket socket, DataStore dataStore) {
         this.socket = socket;
-        // Create the Bouncer and give him the database
+        // Create the managers and give them the database
         this.authManager = new AuthManager(dataStore);
+        this.bookingManager = new BookingManager(dataStore);
     }
 
     @Override
@@ -49,6 +53,18 @@ public class ClientHandler implements Runnable {
                         response = authManager.handleSignUp(newUser);
                         break;
 
+                    case BOOK_ROOM:
+                        Booking newBooking = (Booking) request.getPayload();
+                        response = bookingManager.handleBooking(newBooking);
+                        break;
+                    case GET_MY_BOOKINGS:
+                        String requestingUser = (String) request.getPayload();
+                        response = bookingManager.handleGetMyBookings(requestingUser);
+                        break;
+                    case CANCEL_BOOKING:
+                        String cancelId = (String) request.getPayload();
+                        response = bookingManager.handleCancelBooking(cancelId);
+                        break;
                     default:
                         response = new Response(false, "Unknown request type.");
                         break;

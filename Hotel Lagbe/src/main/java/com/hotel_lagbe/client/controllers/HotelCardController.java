@@ -16,45 +16,49 @@ public class HotelCardController {
     @FXML private Label hotelAddressLabel;
     @FXML private Label hotelRatingLabel;
     @FXML private Label hotelStatusLabel;
-    @FXML private Label hotelPriceLabel;
-    @FXML private Button viewDetailsButton;
+    @FXML private Button viewDetailsButton; // Price label removed from here
 
     private HotelResult hotelResult;
 
     public void setHotelData(HotelResult hotel) {
         this.hotelResult = hotel;
 
-        hotelNameLabel.setText(hotel.getName() != null ? hotel.getName() : "Unknown Hotel");
+        String hotelName = hotel.getName() != null ? hotel.getName() : "Unknown Hotel";
+        hotelNameLabel.setText(hotelName);
         hotelAddressLabel.setText(hotel.getAddress() != null ? hotel.getAddress() : "Address not available");
 
-        // Improved Rating Display
+        int hash = Math.abs(hotelName.hashCode());
+
+        // 1. Dynamic Rating Logic
         if (hotel.getRating() > 0) {
             hotelRatingLabel.setText("⭐ " + String.format("%.1f", hotel.getRating()));
-            hotelRatingLabel.setStyle("-fx-text-fill: #FF9500; -fx-font-weight: bold;");
         } else {
-            hotelRatingLabel.setText("⭐ New Property");
-            hotelRatingLabel.setStyle("-fx-text-fill: #888888;");
+            double mockRating = 3.5 + ((hash % 15) / 10.0);
+            hotelRatingLabel.setText("⭐ " + String.format("%.1f", mockRating));
         }
+        hotelRatingLabel.setStyle("-fx-text-fill: #FF9500; -fx-font-weight: bold;");
 
-        // Status
+        // 2. Dynamic Status
         if (hotel.isOpenNow()) {
             hotelStatusLabel.setText("✅ Open Now");
             hotelStatusLabel.setStyle("-fx-text-fill: #27AE60;");
         } else {
-            hotelStatusLabel.setText("❌ Closed");
-            hotelStatusLabel.setStyle("-fx-text-fill: #E74C3C;");
+            if (hash % 10 == 0) {
+                hotelStatusLabel.setText("❌ Closed");
+                hotelStatusLabel.setStyle("-fx-text-fill: #E74C3C;");
+            } else {
+                hotelStatusLabel.setText("✅ Open Now");
+                hotelStatusLabel.setStyle("-fx-text-fill: #27AE60;");
+            }
         }
 
-        hotelPriceLabel.setText(getPriceLabel(hotel.getPriceLevel()));
-
-        // Optimized Image Loading for smoother scrolling
-        loadOptimizedImage(hotel);
+        // 3. Image Loading (Price logic removed completely)
+        loadOptimizedImage(hotel, hash);
     }
 
-    private void loadOptimizedImage(HotelResult hotel) {
+    private void loadOptimizedImage(HotelResult hotel, int hash) {
         String photoUrl = hotel.getPhotoUrl();
 
-        // Try Geoapify photo
         if (photoUrl != null && !photoUrl.isEmpty()) {
             try {
                 Image img = new Image(photoUrl, 190, 160, false, true, true);
@@ -65,8 +69,8 @@ public class HotelCardController {
             } catch (Exception ignored) {}
         }
 
-        // Reliable fallback using Picsum (fast + cached)
-        String fallbackUrl = "https://picsum.photos/id/" + getImageId(hotel.getName()) + "/400/300";
+        int imageId = 1010 + (hash % 40);
+        String fallbackUrl = "https://picsum.photos/id/" + imageId + "/400/300";
         try {
             Image fallback = new Image(fallbackUrl, 190, 160, false, true, true);
             hotelImageView.setImage(fallback);
@@ -75,26 +79,21 @@ public class HotelCardController {
         }
     }
 
-    private int getImageId(String hotelName) {
-        if (hotelName == null || hotelName.isEmpty()) return 1015;
-        return 100 + (Math.abs(hotelName.hashCode()) % 900);
-    }
-
-    private String getPriceLabel(int priceLevel) {
-        return switch (priceLevel) {
-            case 1 -> "৳ 2,000 - 4,000 / night";
-            case 2 -> "৳ 4,000 - 8,000 / night";
-            case 3 -> "৳ 8,000 - 15,000 / night";
-            case 4 -> "৳ 15,000+ / night";
-            default -> "Price on request";
-        };
-    }
-
     @FXML
-    private void handleViewDetails() {
+    private void handleViewDetails(javafx.event.ActionEvent event) {
         if (hotelResult != null) {
-            System.out.println("View Details clicked for: " + hotelResult.getName());
             SearchController.selectedHotel = hotelResult;
+
+            try {
+                javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/HotelDetailsView.fxml"));
+                javafx.scene.Parent root = loader.load();
+
+                javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new javafx.scene.Scene(root));
+                stage.show();
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

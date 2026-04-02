@@ -23,7 +23,7 @@
             </ImageView>
             <ImageView fitHeight="151.0" fitWidth="145.0" layoutX="-1.0" layoutY="-34.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Downloads/logoo.png" />
+                  <Image url="@../images/logoo.png" />
                </image>
             </ImageView>
             <Label layoutX="213.0" layoutY="122.0" text="Find Your Perfect Hotel Stay" textFill="WHITE">
@@ -34,6 +34,7 @@
                   <DropShadow color="BLACK" height="2.0" radius="2.0" spread="0.5" />
                </effect>
             </Label>
+
             <AnchorPane layoutX="14.0" layoutY="160.0">
                <children>
                   <Pane layoutY="27.0" prefHeight="180.0" prefWidth="774.0" style="-fx-background-color: linear-gradient(to bottom, #FAF9F6 0%, #E8E8E8 100%); -fx-border-color: #4A90E2; -fx-border-width: 2; -fx-background-radius: 25; -fx-border-radius: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);">
@@ -44,18 +45,21 @@
                            </font>
                         </Label>
                         <TextField fx:id="locationField" layoutX="32.0" layoutY="50.0" prefWidth="200.0" promptText="Start typing a location..." style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #000080;" />
+
                         <Label layoutX="282.0" layoutY="14.0" prefHeight="34.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="CHECK-IN DATE" textFill="NAVY">
                            <font>
                               <Font name="Nirmala UI Bold" size="14.0" />
                            </font>
                         </Label>
                         <DatePicker fx:id="checkin" layoutX="282.0" layoutY="48.0" prefHeight="28.0" prefWidth="150.0" promptText="DD/MM/YYYY" style="-fx-border-radius: 10; -fx-border-color: #BDC3C7;" />
+
                         <Label layoutX="462.0" layoutY="14.0" prefHeight="34.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="CHECK-OUT DATE" textFill="NAVY">
                            <font>
                               <Font name="Nirmala UI Bold" size="14.0" />
                            </font>
                         </Label>
                         <DatePicker fx:id="checkout" layoutX="462.0" layoutY="48.0" prefHeight="28.0" prefWidth="150.0" promptText="DD/MM/YYYY" style="-fx-border-radius: 10; -fx-border-color: #BDC3C7;" />
+
                         <Label layoutX="34.0" layoutY="90.0" text="Travel Type:" textFill="NAVY">
                            <font>
                               <Font name="Nirmala UI Bold" size="12.0" />
@@ -65,14 +69,17 @@
                         <CheckBox fx:id="couplesCheck" layoutX="120.0" layoutY="110.0" mnemonicParsing="false" text="Couples" />
                         <CheckBox fx:id="businessCheck" layoutX="200.0" layoutY="110.0" mnemonicParsing="false" text="Business" />
                         <CheckBox fx:id="soloCheck" layoutX="290.0" layoutY="110.0" mnemonicParsing="false" text="Solo" />
-                        <Button fx:id="searchButton" layoutX="327.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fad102; -fx-background-radius: 10; -fx-text-fill: #000080; -fx-font-weight: bold;" text="SEARCH">
-                           <font>
-                              <Font name="Arial" size="12.0" />
-                           </font>
-                        </Button>
-                        <Label fx:id="errorLabel" layoutX="34.0" layoutY="175.0" prefWidth="700.0" textFill="RED" />
+
+                        <Label fx:id="errorLabel" layoutX="34.0" layoutY="145.0" prefWidth="700.0" textFill="RED" />
                      </children>
                   </Pane>
+
+                  <Button fx:id="searchButton" layoutX="327.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fad102; -fx-background-radius: 10; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-cursor: hand;" text="SEARCH">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+
                </children>
             </AnchorPane>
          </children>

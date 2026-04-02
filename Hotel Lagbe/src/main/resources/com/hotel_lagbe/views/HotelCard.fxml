@@ -52,9 +52,7 @@
 
     <!-- Price and Button -->
     <VBox prefWidth="150.0" alignment="CENTER" spacing="15" style="-fx-padding: 16;">
-        <Label fx:id="hotelPriceLabel" text="Price Level" alignment="CENTER" style="-fx-text-fill: #000080; -fx-font-weight: bold;">
-            <font><Font name="Nirmala UI Bold" size="13.5" /></font>
-        </Label>
+
 
 <!--        <Button fx:id="viewDetailsButton"-->
 <!--                text="View Details"-->
