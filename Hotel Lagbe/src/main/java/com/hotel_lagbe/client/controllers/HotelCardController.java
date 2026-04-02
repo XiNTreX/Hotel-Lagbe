@@ -91,10 +91,21 @@ public class HotelCardController {
     }
 
     @FXML
-    private void handleViewDetails() {
+    private void handleViewDetails(javafx.event.ActionEvent event) {
         if (hotelResult != null) {
-            System.out.println("View Details clicked for: " + hotelResult.getName());
+            System.out.println("Navigating to details for: " + hotelResult.getName());
             SearchController.selectedHotel = hotelResult;
+
+            try {
+                javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/HotelDetailsView.fxml"));
+                javafx.scene.Parent root = loader.load();
+
+                javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new javafx.scene.Scene(root));
+                stage.show();
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

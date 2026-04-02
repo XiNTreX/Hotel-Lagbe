@@ -237,4 +237,15 @@ public class SearchController {
             statusLabel.setVisible(true);
         }
     }
+    @FXML
+    private void goToMyBookings(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/MyBookingsView.fxml"));
+            javafx.scene.Parent root = loader.load();
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new javafx.scene.Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #F6F3EB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotel_lagbe.client.controllers.BookingConfirmationController">
+    <children>
+        <VBox alignment="CENTER" layoutX="150.0" layoutY="80.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-padding: 40; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+
+            <Label text="Booking Summary" textFill="#000080">
+                <font><Font name="Nirmala UI Bold" size="28.0" /></font>
+            </Label>
+
+            <VBox spacing="10.0" style="-fx-background-color: #F8F9FA; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #E0E0E0; -fx-border-radius: 8;">
+                <Label fx:id="hotelNameLabel" text="Hotel Name" textFill="#1b3575">
+                    <font><Font name="System Bold" size="18.0" /></font>
+                </Label>
+                <Label fx:id="roomTypeLabel" text="Room Type: " textFill="#333333">
+                    <font><Font name="Nirmala UI" size="14.0" /></font>
+                </Label>
+                <Label fx:id="datesLabel" text="Dates: " textFill="#333333">
+                    <font><Font name="Nirmala UI" size="14.0" /></font>
+                </Label>
+                <Label fx:id="totalPriceLabel" text="Total Price: ৳ 0" textFill="#27AE60">
+                    <font><Font name="System Bold" size="18.0" /></font>
+                    <VBox.margin><Insets top="10.0" /></VBox.margin>
+                </Label>
+            </VBox>
+
+            <Label fx:id="statusLabel" textFill="RED" wrapText="true" />
+
+            <HBox alignment="CENTER" spacing="20.0">
+                <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: transparent; -fx-border-color: #000080; -fx-border-radius: 5; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancel" />
+                <Button mnemonicParsing="false" onAction="#handleConfirmBooking" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #fad102; -fx-background-radius: 5; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-cursor: hand;" text="Confirm Booking" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

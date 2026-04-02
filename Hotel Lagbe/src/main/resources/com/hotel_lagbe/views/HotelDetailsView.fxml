@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotel_lagbe.client.controllers.HotelDetailsController">
+    <children>
+
+        <AnchorPane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #E0E0E0; -fx-border-width: 0 0 1 0;">
+            <children>
+                <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBackToSearch" style="-fx-background-color: transparent; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-cursor: hand;" text="← Back to Search">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="14.0" />
+                    </font>
+                </Button>
+                <ImageView fitHeight="60.0" fitWidth="100.0" layoutX="350.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logoo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+
+        <ScrollPane layoutY="70.0" prefHeight="530.0" prefWidth="800.0" style="-fx-background-color: #F6F3EB; -fx-background: #F6F3EB;" fitToWidth="true">
+            <content>
+                <VBox spacing="20.0" style="-fx-padding: 20;">
+
+                    <HBox spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                        <ImageView fx:id="hotelImageView" fitHeight="200.0" fitWidth="280.0" style="-fx-background-radius: 8;" />
+                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                            <Label fx:id="hotelNameLabel" text="Hotel Name" textFill="#000080" wrapText="true">
+                                <font><Font name="Nirmala UI Bold" size="24.0" /></font>
+                            </Label>
+                            <Label fx:id="hotelAddressLabel" text="Address" textFill="#555555" wrapText="true">
+                                <font><Font name="Nirmala UI" size="14.0" /></font>
+                            </Label>
+                            <Label fx:id="hotelRatingLabel" text="⭐ Rating" textFill="#ff9500">
+                                <font><Font name="Nirmala UI Bold" size="16.0" /></font>
+                            </Label>
+
+                            <VBox style="-fx-background-color: #F8F9FA; -fx-padding: 10; -fx-background-radius: 8;">
+                                <Label text="Popular Facilities:" textFill="#1b3575">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                    <VBox.margin><Insets bottom="5.0" /></VBox.margin>
+                                </Label>
+                                <Label fx:id="facilitiesLabel" text="📶 Free WiFi   🏊 Swimming Pool   🍳 Free Breakfast   ❄️ AC" textFill="#333333">
+                                    <font><Font name="Nirmala UI" size="13.0" /></font>
+                                </Label>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <Label text="Available Room Types" textFill="#000080">
+                        <font><Font name="Nirmala UI Bold" size="20.0" /></font>
+                    </Label>
+
+                    <VBox fx:id="roomsContainer" spacing="15.0" />
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

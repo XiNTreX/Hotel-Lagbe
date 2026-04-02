@@ -18,11 +18,10 @@
         <!-- Top Navbar -->
         <AnchorPane layoutY="-1.0" prefHeight="78.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;">
             <children>
-                <Button layoutX="681.0" layoutY="29.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #000080;                            -fx-background-radius: 20;                            -fx-text-fill: white;                            -fx-font-weight: bold;                            -fx-cursor: hand;" text="Chat">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="15.0" />
-                    </font>
+                <Button layoutX="640.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToMyBookings" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #fad102; -fx-background-radius: 20; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);" text="My Bookings">
+                    <font><Font name="Nirmala UI Bold" size="14.0" /></font>
                 </Button>
+
             <ImageView fitHeight="110.0" fitWidth="110.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../../Desktop/IdeaProjects/Hotel-Lagbe/Hotel%20Lagbe/src/main/resources/com/hotel_lagbe/images/logoo.png" />
