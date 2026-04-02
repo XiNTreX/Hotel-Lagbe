@@ -35,7 +35,7 @@ public class MyBookingsController {
             statusLabel.setText("You must be logged in to view bookings.");
             return;
         }
-
+        //test
         // Ask the server for the user's bookings
         Request req = new Request(MessageType.GET_MY_BOOKINGS, LoginController.loggedInUser.getUsername());
         Response serverReply = ServerConnection.getInstance().sendRequest(req);
