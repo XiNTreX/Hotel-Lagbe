@@ -55,10 +55,8 @@ public class SearchController {
     public void initialize() {
         formatDatePicker(checkin);
         formatDatePicker(checkout);
-        // Load locations for suggestion
         loadLocationSuggestions();
 
-        // Pre-fill from previous search
         SearchCriteria criteria = LocationInputController.currentSearchCriteria;
         if (criteria != null) {
             locationField.setText(criteria.getLocation());
@@ -69,7 +67,6 @@ public class SearchController {
             showStatus("No search criteria found.");
         }
 
-        // Setup suggestion popup
         setupSuggestionPopup();
     }
 
@@ -96,7 +93,6 @@ public class SearchController {
         suggestionPopup.getContent().add(suggestionListView);
         suggestionPopup.setAutoHide(true);
 
-        // Text change listener for suggestions
         locationField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (allLocations == null || newValue.isEmpty()) {
                 suggestionPopup.hide();
@@ -120,7 +116,6 @@ public class SearchController {
             }
         });
 
-        // Click on suggestion
         suggestionListView.setOnMouseClicked(event -> {
             String selected = suggestionListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
@@ -129,7 +124,6 @@ public class SearchController {
             }
         });
 
-        // Enter key selects first suggestion
         locationField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER && !suggestionListView.getItems().isEmpty()) {
                 locationField.setText(suggestionListView.getItems().get(0));

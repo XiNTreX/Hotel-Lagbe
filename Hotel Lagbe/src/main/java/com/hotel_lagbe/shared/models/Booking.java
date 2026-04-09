@@ -18,7 +18,7 @@ public class Booking implements Serializable {
     private double totalPrice;
 
     public Booking(User guest, Room bookedRoom, String hotelName, LocalDate checkInDate, LocalDate checkOutDate, double totalPrice) {
-        this.bookingId = UUID.randomUUID().toString(); // Generate unique ID
+        this.bookingId = UUID.randomUUID().toString();
         this.guest = guest;
         this.bookedRoom = bookedRoom;
         this.bookingTime = LocalDateTime.now();
@@ -28,10 +28,8 @@ public class Booking implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    // Add this new Getter
     public String getBookingId() { return bookingId; }
 
-    // ... (Keep existing getters) ...
     public User getGuest() { return guest; }
     public Room getBookedRoom() { return bookedRoom; }
     public LocalDateTime getBookingTime() { return bookingTime; }

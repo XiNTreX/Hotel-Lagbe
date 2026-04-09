@@ -38,18 +38,14 @@ public class SignUpController {
             return;
         }
 
-        // 1. Create the new User object with all THREE pieces of data
         User newUser = new User(fullName, username, password);
         Request signUpRequest = new Request(MessageType.SIGN_UP, newUser);
 
-        // 2. Send through the tunnel
         ServerConnection connection = ServerConnection.getInstance();
         Response serverReply = connection.sendRequest(signUpRequest);
 
-        // 3. Check what the server said
         if (serverReply.isSuccess()) {
             showMessage("Account created! You can now go back and log in.", true);
-            // Optionally clear the fields so it looks nice
             fullNameField.clear();
             usernameField.clear();
             passwordField.clear();

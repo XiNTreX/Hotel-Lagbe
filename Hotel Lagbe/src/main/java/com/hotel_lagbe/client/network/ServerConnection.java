@@ -12,19 +12,16 @@ public class ServerConnection {
     private static final String HOST = "localhost";
     private static final int PORT = 8080;
 
-    // Singleton instance
     private static ServerConnection instance;
 
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    // Private constructor ensures nobody else can create a new connection
     private ServerConnection() {
         connect();
     }
 
-    // This is how the rest of the app gets the connection
     public static ServerConnection getInstance() {
         if (instance == null) {
             instance = new ServerConnection();
@@ -43,7 +40,6 @@ public class ServerConnection {
         }
     }
 
-    // The single method your GUI controllers will use to send data
     public Response sendRequest(Request request) {
         try {
             out.writeObject(request);

@@ -7,7 +7,7 @@ public class SearchCriteria {
     private String location;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private List<String> travelTypes; // e.g., ["Families", "Couples"]
+    private List<String> travelTypes;
 
     public SearchCriteria(String location, LocalDate checkInDate, LocalDate checkOutDate, List<String> travelTypes) {
         this.location = location;

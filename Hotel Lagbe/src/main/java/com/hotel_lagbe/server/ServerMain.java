@@ -12,7 +12,6 @@ public class ServerMain {
     public static void main(String[] args) {
         System.out.println("Starting Hotel-Lagbe Server on port " + PORT + "...");
 
-        // 1. Create our database IN MEMORY before we open the doors
         DataStore database = new DataStore();
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
@@ -22,7 +21,6 @@ public class ServerMain {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getInetAddress());
 
-                // 2. Pass the shared database to the new Thread
                 ClientHandler handler = new ClientHandler(clientSocket, database);
                 new Thread(handler).start();
             }

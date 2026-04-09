@@ -66,7 +66,6 @@ public class LocationInputController {
 
     @FXML
     public void initialize() {
-        // Fetch locations from API asynchronously
         formatDatePicker(checkin);
         formatDatePicker(checkout);
         CompletableFuture.supplyAsync(this::fetchLocationsFromAPI)
@@ -76,7 +75,6 @@ public class LocationInputController {
             }))
             .exceptionally(ex -> {
                 Platform.runLater(() -> {
-                    // Fallback to static list if API fails
                     List<String> fallbackLocations = List.of(
                         "Dhaka", "Chittagong", "Khulna", "Rajshahi", "Sylhet", "Barisal", "Rangpur",
                         "Cox's Bazar", "Bandarban", "Saint Martin", "Kuakata", "Sundarbans"
@@ -87,13 +85,11 @@ public class LocationInputController {
                 return null;
             });
 
-        // Setup suggestion popup
         suggestionListView = new ListView<>();
         suggestionPopup = new Popup();
         suggestionPopup.getContent().add(suggestionListView);
         suggestionPopup.setAutoHide(true);
 
-        // Listener for text changes in locationField
         locationField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (allLocations == null || newValue.isEmpty()) {
                 suggestionPopup.hide();
@@ -114,7 +110,6 @@ public class LocationInputController {
             }
         });
 
-        // Handle selection from suggestions
         suggestionListView.setOnMouseClicked(event -> {
             String selected = suggestionListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
@@ -123,7 +118,6 @@ public class LocationInputController {
             }
         });
 
-        // Handle Enter key to select first suggestion
         locationField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER && !suggestionListView.getItems().isEmpty()) {
                 locationField.setText(suggestionListView.getItems().get(0));
@@ -154,65 +148,10 @@ public class LocationInputController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<>(); // Return empty if failed
+        return new ArrayList<>();
     }
 
-//    @FXML
-//    private void handleSearch() {
-//        String location = locationField.getText().trim();
-//        LocalDate checkInDate = checkin.getValue();
-//        LocalDate checkOutDate = checkout.getValue();
-//
-//        // Collect selected travel types
-//        List<String> travelTypes = new ArrayList<>();
-//        if (familiesCheck.isSelected()) travelTypes.add("Families");
-//        if (couplesCheck.isSelected()) travelTypes.add("Couples");
-//        if (businessCheck.isSelected()) travelTypes.add("Business");
-//        if (soloCheck.isSelected()) travelTypes.add("Solo");
-//
-//        // Validation
-//        if (location.isEmpty()) {
-//            errorLabel.setText("Please enter a location.");
-//            return;
-//        }
-//        if (checkInDate == null) {
-//            errorLabel.setText("Please select a check-in date.");
-//            return;
-//        }
-//        if (checkOutDate == null) {
-//            errorLabel.setText("Please select a check-out date.");
-//            return;
-//        }
-//        if (checkInDate.isBefore(LocalDate.now())) {
-//            errorLabel.setText("Check-in date cannot be in the past.");
-//            return;
-//        }
-//        if (checkOutDate.isBefore(checkInDate) || checkOutDate.isEqual(checkInDate)) {
-//            errorLabel.setText("Check-out date must be after check-in date.");
-//            return;
-//        }
-//
-//        // Create and store search criteria
-//        currentSearchCriteria = new SearchCriteria(location, checkInDate, checkOutDate, travelTypes);
-//
-//        // Clear error and proceed to search results view
-//        errorLabel.setText("");
-//        System.out.println("Search criteria: " + location + ", " + checkInDate + " to " + checkOutDate + ", Types: " + travelTypes);
-//
-//        // Switch to search results view (don't implement it yet)
-//        try {
-//            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/SearchView.fxml"));
-//            javafx.scene.Parent root = loader.load();
-//            javafx.stage.Stage stage = (javafx.stage.Stage) searchButton.getScene().getWindow();
-//            javafx.scene.Scene scene = new javafx.scene.Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//        } catch (java.io.IOException e) {
-//            e.printStackTrace();
-//            errorLabel.setText("Error loading search results page.");
-//        }
-//    }
-//}
+
 @FXML
 private void handleSearch() {
     String location = locationField.getText().trim();
@@ -247,12 +186,10 @@ private void handleSearch() {
         return;
     }
 
-    // Save search criteria
     currentSearchCriteria = new SearchCriteria(location, checkInDate, checkOutDate, travelTypes);
 
     errorLabel.setText("");
 
-    // Navigate to SearchView (Results Page)
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/SearchView.fxml"));
         javafx.scene.Parent root = loader.load();

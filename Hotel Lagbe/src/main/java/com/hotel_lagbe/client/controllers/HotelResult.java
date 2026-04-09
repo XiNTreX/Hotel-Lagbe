@@ -20,10 +20,8 @@ public class HotelResult implements Serializable {
     private double latitude;
     private double longitude;
 
-    // Default constructor (required for serialization)
     public HotelResult() {}
 
-    // Getters
     public String getPlaceId()    { return placeId; }
     public String getName()       { return name; }
     public String getAddress()    { return address; }
@@ -34,7 +32,6 @@ public class HotelResult implements Serializable {
     public double getLatitude()   { return latitude; }
     public double getLongitude()  { return longitude; }
 
-    // Setters (used by HotelSearchService)
     public void setPlaceId(String placeId)       { this.placeId = placeId; }
     public void setName(String name)             { this.name = name; }
     public void setAddress(String address)       { this.address = address; }

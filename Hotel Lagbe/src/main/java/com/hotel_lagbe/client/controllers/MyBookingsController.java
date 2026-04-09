@@ -35,8 +35,6 @@ public class MyBookingsController {
             statusLabel.setText("You must be logged in to view bookings.");
             return;
         }
-        //test
-        // Ask the server for the user's bookings
         Request req = new Request(MessageType.GET_MY_BOOKINGS, LoginController.loggedInUser.getUsername());
         Response serverReply = ServerConnection.getInstance().sendRequest(req);
 
@@ -84,7 +82,6 @@ public class MyBookingsController {
             priceLabel.setFont(Font.font("Nirmala UI", FontWeight.BOLD, 18));
             priceLabel.setStyle("-fx-text-fill: #27AE60;");
 
-            // --- NEW CANCEL BUTTON ---
             javafx.scene.control.Button cancelBtn = new javafx.scene.control.Button("Cancel Booking");
             cancelBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #e74c3c; -fx-text-fill: #e74c3c; -fx-border-radius: 5; -fx-cursor: hand;");
             cancelBtn.setOnAction(e -> sendCancelRequest(booking.getBookingId()));
@@ -96,7 +93,6 @@ public class MyBookingsController {
         }
     }
 
-    // --- NEW CANCEL HANDLER METHOD ---
     private void sendCancelRequest(String bookingId) {
         Request req = new Request(MessageType.CANCEL_BOOKING, bookingId);
         Response serverReply = ServerConnection.getInstance().sendRequest(req);
@@ -104,7 +100,6 @@ public class MyBookingsController {
         if (serverReply.isSuccess()) {
             statusLabel.setStyle("-fx-text-fill: green;");
             statusLabel.setText("Booking cancelled successfully!");
-            // Reload the page to show updated list
             initialize();
         } else {
             statusLabel.setStyle("-fx-text-fill: red;");

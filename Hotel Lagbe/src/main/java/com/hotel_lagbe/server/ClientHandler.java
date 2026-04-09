@@ -18,14 +18,11 @@ public class ClientHandler implements Runnable {
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    // The worker needs its tools
     private AuthManager authManager;
     private BookingManager bookingManager;
 
-    // We updated the constructor to accept the DataStore
     public ClientHandler(Socket socket, DataStore dataStore) {
         this.socket = socket;
-        // Create the managers and give them the database
         this.authManager = new AuthManager(dataStore);
         this.bookingManager = new BookingManager(dataStore);
     }
@@ -37,11 +34,9 @@ public class ClientHandler implements Runnable {
             in = new ObjectInputStream(socket.getInputStream());
 
             while (true) {
-                // 1. Receive the Envelope
                 Request request = (Request) in.readObject();
                 Response response = null;
 
-                // 2. Read the Label and Route it
                 switch (request.getType()) {
                     case LOGIN:
                         User loginUser = (User) request.getPayload();
@@ -70,7 +65,6 @@ public class ClientHandler implements Runnable {
                         break;
                 }
 
-                // 3. Send the Result back to the JavaFX screen
                 out.writeObject(response);
                 out.flush();
             }

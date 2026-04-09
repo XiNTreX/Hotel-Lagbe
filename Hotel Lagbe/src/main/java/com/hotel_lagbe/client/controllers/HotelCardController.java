@@ -16,8 +16,7 @@ public class HotelCardController {
     @FXML private Label hotelAddressLabel;
     @FXML private Label hotelRatingLabel;
     @FXML private Label hotelStatusLabel;
-    @FXML private Button viewDetailsButton; // Price label removed from here
-
+    @FXML private Button viewDetailsButton;
     private HotelResult hotelResult;
 
     public void setHotelData(HotelResult hotel) {
@@ -29,7 +28,6 @@ public class HotelCardController {
 
         int hash = Math.abs(hotelName.hashCode());
 
-        // 1. Dynamic Rating Logic
         if (hotel.getRating() > 0) {
             hotelRatingLabel.setText("⭐ " + String.format("%.1f", hotel.getRating()));
         } else {
@@ -38,7 +36,6 @@ public class HotelCardController {
         }
         hotelRatingLabel.setStyle("-fx-text-fill: #FF9500; -fx-font-weight: bold;");
 
-        // 2. Dynamic Status
         if (hotel.isOpenNow()) {
             hotelStatusLabel.setText("✅ Open Now");
             hotelStatusLabel.setStyle("-fx-text-fill: #27AE60;");
@@ -52,7 +49,6 @@ public class HotelCardController {
             }
         }
 
-        // 3. Image Loading (Price logic removed completely)
         loadOptimizedImage(hotel, hash);
     }
 

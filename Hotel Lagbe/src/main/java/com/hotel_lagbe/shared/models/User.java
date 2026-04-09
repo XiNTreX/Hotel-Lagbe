@@ -9,14 +9,12 @@ public class User implements Serializable {
     private String username;
     private String password;
 
-    // Constructor for Signing Up (Needs all three)
     public User(String fullName, String username, String password) {
         this.fullName = fullName;
         this.username = username;
         this.password = password;
     }
 
-    // Constructor for Logging In (Only needs username and password)
     public User(String username, String password) {
         this.fullName = "";
         this.username = username;

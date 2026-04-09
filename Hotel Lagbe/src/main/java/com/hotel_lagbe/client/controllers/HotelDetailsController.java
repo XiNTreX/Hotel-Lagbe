@@ -33,7 +33,6 @@ public class HotelDetailsController {
 
     @FXML
     public void initialize() {
-        // Fetch the hotel that was clicked on the previous page
         HotelResult selectedHotel = SearchController.selectedHotel;
 
         if (selectedHotel != null) {
@@ -54,7 +53,6 @@ public class HotelDetailsController {
             hotelRatingLabel.setText("⭐ New Property (Unrated)");
         }
 
-        // Load the image just like in HotelCardController
         String photoUrl = hotel.getPhotoUrl();
         if (photoUrl != null && !photoUrl.isEmpty()) {
             try {
@@ -66,7 +64,6 @@ public class HotelDetailsController {
             loadFallbackImage(hotel.getName());
         }
 
-        // Randomize facilities slightly based on price level
         if (hotel.getPriceLevel() >= 3) {
             facilitiesLabel.setText("📶 Free WiFi   🏊 Swimming Pool   🍳 Free Breakfast   🏋️ Gym   💆 Spa");
         } else {
@@ -81,7 +78,6 @@ public class HotelDetailsController {
     }
 
     private void loadMockRooms(HotelResult hotel) {
-        // Base price calculation based on the hotel's price level
         double basePrice = hotel.getPriceLevel() * 2500.0;
         if (basePrice == 0) basePrice = 3000.0;
 
@@ -109,7 +105,6 @@ public class HotelDetailsController {
         infoBox.getChildren().addAll(typeLabel, detailsLabel);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
 
-        // Price and Button
         VBox actionBox = new VBox(10);
         actionBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -120,7 +115,6 @@ public class HotelDetailsController {
         Button bookButton = new Button("Book Now");
         bookButton.setStyle("-fx-background-color: #fad102; -fx-text-fill: #000080; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand; -fx-pref-width: 120; -fx-pref-height: 35;");
 
-        // This is where we will hook up the booking logic later
         bookButton.setOnAction(e -> {
             BookingConfirmationController.selectedRoomType = type;
             BookingConfirmationController.selectedRoomPricePerNight = price;

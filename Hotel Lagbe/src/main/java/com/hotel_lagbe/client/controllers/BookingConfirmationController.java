@@ -27,7 +27,6 @@ public class BookingConfirmationController {
     @FXML private Label totalPriceLabel;
     @FXML private Label statusLabel;
 
-    // Static variables passed from HotelDetailsController when "Book Now" is clicked
     public static String selectedRoomType;
     public static double selectedRoomPricePerNight;
 
@@ -50,7 +49,6 @@ public class BookingConfirmationController {
 
         datesLabel.setText("Dates: " + checkIn + " to " + checkOut);
 
-        // Calculate Total Price
         totalNights = ChronoUnit.DAYS.between(checkIn, checkOut);
         if (totalNights <= 0) totalNights = 1; // Minimum 1 night just in case
 
@@ -66,23 +64,18 @@ public class BookingConfirmationController {
             return;
         }
 
-        // 1. Create a mock Room object to send to the server
         StandardRoom bookedRoom = new StandardRoom(selectedRoomType, selectedRoomPricePerNight, 1);
 
-        // 2. Extract necessary details for the updated Booking model
         var checkIn = LocationInputController.currentSearchCriteria.getCheckInDate();
         var checkOut = LocationInputController.currentSearchCriteria.getCheckOutDate();
         String hotelName = SearchController.selectedHotel.getName();
 
-        // 3. Create the Booking object
         Booking newBooking = new Booking(LoginController.loggedInUser, bookedRoom, hotelName, checkIn, checkOut, totalPrice);
         Request bookingRequest = new Request(MessageType.BOOK_ROOM, newBooking);
 
-        // 4. Send to Server
         Response serverReply = ServerConnection.getInstance().sendRequest(bookingRequest);
 
         if (serverReply.isSuccess()) {
-            // --- NEW: Redirect to My Bookings Page upon success ---
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/MyBookingsView.fxml"));
                 Parent root = loader.load();
@@ -102,7 +95,6 @@ public class BookingConfirmationController {
     @FXML
     private void handleCancel(ActionEvent event) {
         try {
-            // Navigate back to the Hotel Details view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel_lagbe/views/HotelDetailsView.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
